@@ -1,10 +1,11 @@
 import React from "react";
-import { loadFont } from "@remotion/google-fonts/PatrickHand";
+import { loadFont } from "@remotion/google-fonts/Pangolin";
 import { ramp } from "./helpers";
 
 // Burned-in storybook subtitles: a handwritten font, warm white, with a soft dark halo so they
 // read on any background. Each chunk fades in and out over 6 frames.
-const { fontFamily } = loadFont();
+// Patrick Hand has no Cyrillic glyphs (the browser fell back to a serif), so use Pangolin with the cyrillic subset.
+const { fontFamily } = loadFont("normal", { weights: ["400"], subsets: ["cyrillic", "latin"] });
 
 export const Subtitles: React.FC<{ f: number; subs: [number, number, string][]; width: number; height: number }> = ({ f, subs, width, height }) => {
   const s = subs.find(([a, b]) => f >= a && f < b);

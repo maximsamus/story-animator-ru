@@ -27,7 +27,9 @@ Write the spine before the narration. If you can't, the story isn't ready.
 
 ## Narration rules
 - About **2.2 words per second** at a gentle storybook pace (30 s ≈ 60–70 words, 60 s ≈ 120–130,
-  90 s ≈ 180–200).
+  90 s ≈ 180–200). Russian voices ran **2.0-2.4 words per second** in our tests (the same 30 s brief:
+  55 words = 23 s with one voice, 57 words = 29 s with another). Plan for 2.0: 30 s ≈ 50 words,
+  60 s ≈ 110. A take that runs long costs a second pair of takes.
 - 10–13 short lines for a 60 s film. **One picture per line.** If a line can't be drawn, rewrite it.
 - Concrete nouns and actions, not feelings told ("his flame held on", not "he felt brave").
 - Use a pause "..." before a turn or reveal. It gives you room for a beat on screen.

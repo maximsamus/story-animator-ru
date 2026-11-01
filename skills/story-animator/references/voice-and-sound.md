@@ -1,9 +1,10 @@
 # Voice, music and sound effects (ElevenLabs)
 
 ## Cost and plans (tell the user before spending)
-- Credits are per generation. From real runs: one narration take ≈ 6 credits per second of story
-  (`eleven_v4`; 25 s ≈ 335, 60 s ≈ 700–820), and the skill makes **2 takes**, so double it
-  (a 60 s story ≈ 1,400–1,600). A 60 s music take ≈ 900, one sound effect ≈ 17.
+- Credits are per generation, about **1 credit per character** of the narration text (tags count).
+  From a real run: a 30 s Russian story, 418 characters, 2 takes on `eleven_v4` ≈ 840 credits.
+  The skill makes **2 takes**, so a 60 s story ≈ 1,600-1,800. A 60 s music take ≈ 900, one sound
+  effect ≈ 17. The credit counter in the ElevenLabs account can lag a few minutes behind.
 - The **free plan** (about 10,000 credits a month) is enough to start: a few narrations, or one full
   film with music. **But it has no commercial licence and requires attribution.** If the user will
   monetise (a YouTube channel, client work, ads), they need a paid plan (Starter or above). Say this
@@ -31,7 +32,7 @@
 ```bash
 curl -sS -X POST "https://api.elevenlabs.io/v1/text-to-speech/<VOICE_ID>?output_format=mp3_44100_128" \
   -H "xi-api-key: $ELEVENLABS_API_KEY" -H "Content-Type: application/json" \
-  -d '{"text": "<narration>", "model_id": "eleven_v3"}' -o public/audio/narration.mp3
+  -d '{"text": "<narration>", "model_id": "eleven_v4"}' -o public/audio/narration.mp3
 ```
 List voices with `curl -H "xi-api-key: $ELEVENLABS_API_KEY" https://api.elevenlabs.io/v2/voices`.
 Check the ElevenLabs API docs for the newest model id if this one is refused.

@@ -43,3 +43,5 @@
 | The voice reads "[softly]" aloud | Use the other take, or remove that tag and regenerate |
 | The voice is 0.5 s ahead of the subtitles | `STORY.audio` points at the raw narration; run `mix.py` and use `audio/mix.wav` |
 | npm warns about esbuild's postinstall script | Harmless; rendering works without it |
+| Subtitles render in a serif fallback font | The subtitle font lacks the alphabet; use a font with that subset (template: Pangolin, Latin + Cyrillic) |
+| A line names a character who is off screen | Every character named in a line must be visible in the frame while that line is spoken; move the camera or the character |

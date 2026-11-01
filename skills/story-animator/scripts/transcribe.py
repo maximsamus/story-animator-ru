@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Word-level timestamps for the narration, so every animation beat can land on the spoken word.
 
-usage:  python transcribe.py public/audio/narration.mp3 [--offset 15] [--fps 30] [--lang en] [--model small]
+usage:  python transcribe.py public/audio/narration.mp3 [--offset 15] [--fps 30] [--lang ru] [--model small]
 writes: <audio>.words.json  ([{"w": word, "s": start_s, "e": end_s}, ...])
 prints: one line per sentence-ish chunk with its start/end in seconds AND in film frames
         (frame = offset + round(seconds * fps)), ready to paste into src/story.ts.
@@ -16,14 +16,14 @@ ap = argparse.ArgumentParser()
 ap.add_argument("audio")
 ap.add_argument("--offset", type=int, default=15, help="frames of silence before the narration starts in the film")
 ap.add_argument("--fps", type=int, default=30)
-ap.add_argument("--lang", default="en")
+ap.add_argument("--lang", default=None, help="language code of the narration (ru, en, ...); omit to detect automatically")
 ap.add_argument("--model", default="small", help="tiny / base / small / medium (bigger = slower, more accurate)")
 a = ap.parse_args()
 
 try:
     from faster_whisper import WhisperModel
 except ImportError:
-    sys.exit("faster-whisper is missing. Run:\n  python3 -m venv .venv && .venv/bin/pip install faster-whisper\n"
+    sys.exit("faster-whisper is missing. Run:\n  python3 -m venv .venv && .venv/bin/pip install faster-whisper \"av<18\"\n"
              "then:  .venv/bin/python " + " ".join(sys.argv))
 
 model = WhisperModel(a.model, device="cpu", compute_type="int8")

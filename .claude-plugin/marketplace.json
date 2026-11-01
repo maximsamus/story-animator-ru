@@ -1,12 +1,15 @@
 {
-  "name": "story-animator",
-  "owner": { "name": "Deenu Khan", "url": "https://www.instagram.com/neuraltech.ai/" },
+  "name": "story-animator-ru",
+  "owner": {
+    "name": "ClaudeBase",
+    "url": "https://claudebase.ru"
+  },
   "plugins": [
     {
       "name": "story-animator",
       "source": "./",
       "description": "Narrated 2D animated story videos, every frame drawn in code (Remotion) with an ElevenLabs voice.",
-      "version": "1.0.0"
+      "version": "1.0.0-ru"
     }
   ]
 }

@@ -49,18 +49,21 @@ default, and say "reply 'go' to use the defaults":
 1. **The story idea** (one line), or "surprise me".
 2. **Length:** any length; suggest 30 s, 60 s (default) or 90 s.
 3. **Shape:** 16:9 for YouTube (default), 9:16 for Reels/Shorts/TikTok, or 4:5 for an Instagram post.
-4. **Narration:** language (default English) and voice feel (default: warm, gentle storyteller).
+4. **Narration:** language (default Russian) and voice feel (default: warm, gentle storyteller).
 5. **Music and sound effects:** yes (default) or no.
 6. **Audience:** young kids (default), older kids, or all ages.
 
 Tell the user the expected ElevenLabs cost in the same message: the narration is made as **2 takes**,
-about **2 × 6 credits per second of story** (a 60 s story ≈ 1,400–1,600 credits); music ≈ 900 per
+about **1 credit per character of narration text, per take**, and you make 2 takes (a real 30 s Russian
+story, 418 characters with tags, cost ≈ 840 credits; a 60 s story ≈ 1,600-1,800); music ≈ 900 per
 60 s take; each sound effect ≈ 17. If the user says "you decide" or "go", use the defaults.
 
 ## Step 2: Write the story
 Follow `references/story.md`. Produce:
 - the spine in three sentences (setup → turn → payoff) and the token;
-- the narration, about 2.2 words per second (25 s ≈ 50 words, 60 s ≈ 120–130), in short lines,
+- the narration, about 2.2 words per second in English (25 s ≈ 50 words, 60 s ≈ 120–130) or about
+  2.0 in Russian (Russian voices ran 2.0-2.4 words per second in our tests; plan for 2.0 so an exact
+  length still fits, e.g. 30 s ≈ 50 words), in short lines,
   one picture per line;
 - a beat list: what we SEE on each line, and the camera move.
 
@@ -86,8 +89,10 @@ See `references/voice-and-sound.md` for details.
 
 ## Step 5: Time the beats
 1. Word timings:
-   `python3 -m venv .venv && .venv/bin/pip install faster-whisper` (once), then
-   `.venv/bin/python <skill>/scripts/transcribe.py public/audio/narration.mp3`.
+   `python3 -m venv .venv && .venv/bin/pip install faster-whisper "av<18"` (once; newer `av` breaks
+   faster-whisper 1.2 with "unexpected keyword argument 'metadata_errors'"), then
+   `.venv/bin/python <skill>/scripts/transcribe.py public/audio/narration.mp3 --lang ru` (use the
+   narration's language code: `ru`, `en`, ...; without `--lang` the language is detected automatically).
    It prints every word with its film frame (`frame = 15 + round(seconds × 30)`) and a suggested length.
 2. Fill in `src/story.ts`:
    - `durationFrames`: the user's exact length if they gave one (e.g. 25 s → 750), otherwise the
@@ -145,6 +150,9 @@ The mix is what puts the voice at the right moment (0.5 s in) and at the right l
 ## When something goes wrong
 - A render fails with a missing font or a timeout: run it again once; Google Fonts load on first use.
 - `transcribe.py` says faster-whisper is missing: run the one install command it prints.
+- Subtitles come out in a serif or fallback font: the subtitle font lacks the letters of the narration
+  language. The template uses Pangolin (Latin + Cyrillic); for other alphabets pick a Google Font that
+  has them and load it with that subset in `src/kit/Subtitles.tsx`.
 - The voice reads a tag aloud or mispronounces a name: use the other take, or spell the name
   phonetically in the text (e.g. "Dee-ya") and generate again.
 - The film feels static: add idle motion (blink, breathing, flicker, drifting dust) and a slow

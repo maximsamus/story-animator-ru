@@ -1,10 +1,20 @@
 {
   "name": "story-animator",
-  "version": "1.0.0",
-  "description": "Turn a one-line idea into a narrated 2D animated story video: Claude writes the story, ElevenLabs voices it, and every frame is drawn in code with Remotion.",
-  "author": { "name": "Deenu Khan", "url": "https://www.instagram.com/neuraltech.ai/" },
-  "homepage": "https://github.com/deenukhan/story-animator",
-  "repository": "https://github.com/deenukhan/story-animator",
+  "version": "1.0.0-ru",
+  "description": "Мультфильм с озвучкой из одной строки идеи: Claude пишет сказку, ElevenLabs озвучивает, каждый кадр рисуется кодом в Remotion. Русская версия навыка Deenu Khan.",
+  "author": {
+    "name": "Deenu Khan",
+    "url": "https://www.instagram.com/neuraltech.ai/"
+  },
+  "homepage": "https://github.com/maximsamus/story-animator-ru",
+  "repository": "https://github.com/maximsamus/story-animator-ru",
   "license": "MIT",
-  "keywords": ["animation", "story", "kids", "remotion", "elevenlabs", "video"]
+  "keywords": [
+    "animation",
+    "story",
+    "kids",
+    "remotion",
+    "elevenlabs",
+    "video"
+  ]
 }

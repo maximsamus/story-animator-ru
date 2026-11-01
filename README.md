@@ -1,100 +1,93 @@
-# Story Animator: animated story videos with Claude
+# Story Animator по-русски: мультфильмы кодом через Claude Code
 
-A Claude Code skill that turns one line like
+Навык для Claude Code: из одной строки идеи делает готовый мультфильм с озвучкой.
 
-> *Make a 60-second kids' story about a tiny cleaning robot who finds the last flower in a grey city.*
+> Сделай 30-секундную сказку для детей про маленький фонарик, который боится темноты. Вертикально 9:16.
 
-into a finished, narrated 2D animated film:
+- **Claude пишет сказку:** один герой, одна беда, один поворот, хороший конец.
+- **ElevenLabs озвучивает:** Claude подбирает голос рассказчика.
+- **Claude рисует каждый кадр кодом:** фигуры SVG в [Remotion](https://www.remotion.dev), под каждое слово озвучки. Видеонейросеть не нужна, кредиты на видео не тратятся.
+- **Музыка и звуки по желанию**, голос всегда громче фона.
+- **На выходе MP4:** для YouTube (16:9), рилсов и шортсов (9:16) или поста в Instagram (4:5).
 
-- **Claude writes the story**: one character, one problem, one turn, a happy ending.
-- **ElevenLabs voices it**: Claude picks a storyteller voice and makes the narration.
-- **Claude draws every frame in code**: SVG shapes in [Remotion](https://www.remotion.dev), timed to the voice. No AI image or video generation.
-- **Optional music and sound effects**: mixed so the voice is always on top.
-- **You get an MP4** for YouTube (16:9), Reels/Shorts (9:16) or an Instagram post (4:5).
+## Чей это навык
 
-Made by [@neuraltech.ai](https://www.instagram.com/neuraltech.ai/).
+Автор - Deenu Khan ([@neuraltech.ai](https://www.instagram.com/neuraltech.ai/)), оригинал: [deenukhan/story-animator](https://github.com/deenukhan/story-animator), лицензия MIT. Английская инструкция автора - в [README.en.md](README.en.md).
 
----
+Это копия с правками под русский язык от [ClaudeBase](https://claudebase.ru). Проверена 1 ноября 2026 года: сказка на 30 секунд с русской озвучкой собралась от начала до конца. Что поменяли:
 
-## Install (one time)
+- **Шрифт субтитров с русскими буквами** (Pangolin). В оригинальном шрифте кириллицы нет, и субтитры выходили запасным шрифтом с засечками.
+- **Озвучка по умолчанию на русском**, расстановка слов по кадрам понимает русский.
+- **Починена установка распознавания речи:** новая версия библиотеки `av` ломала шаг с таймингами.
+- **Честная цена озвучки:** около 1 кредита ElevenLabs за знак текста на каждый дубль. Сказка на 30 секунд в двух дублях - около 840 кредитов.
+- **В проверку добавлено правило:** герой, о котором говорит рассказчик, виден в кадре.
 
-### The easy way
-Open **Claude Code** (the **Code** tab in the Claude desktop app, or `claude` in a terminal) and paste:
+## Установка (один раз)
+
+Откройте Claude Code и отправьте ему:
 
 ```
-install this skill: https://github.com/deenukhan/story-animator
+Установи этот навык: https://github.com/maximsamus/story-animator-ru
 ```
 
-Claude downloads it and puts it in your skills folder (`~/.claude/skills/story-animator`).
+Claude скачает его и положит в папку навыков (`~/.claude/skills/story-animator`). После установки начните новую сессию Claude Code.
 
-### As a plugin
+Как плагин:
+
 ```
-/plugin marketplace add deenukhan/story-animator
-/plugin install story-animator@story-animator
+/plugin marketplace add maximsamus/story-animator-ru
+/plugin install story-animator@story-animator-ru
 ```
 
-### By hand
+Руками:
+
 ```bash
-git clone https://github.com/deenukhan/story-animator.git
+git clone https://github.com/maximsamus/story-animator-ru.git
 mkdir -p ~/.claude/skills
-cp -R story-animator/skills/story-animator ~/.claude/skills/
+cp -R story-animator-ru/skills/story-animator ~/.claude/skills/
 ```
 
-Start a new Claude Code session after installing.
+## Что нужно
 
-## What you need
-| Thing | Why | Cost |
+| Что | Зачем | Цена |
 |---|---|---|
-| Claude Code | Runs everything | Needs a paid Claude plan |
-| ElevenLabs, connected to Claude (Settings → Connectors → ElevenLabs) | The narrator voice, music, sound effects | The free plan is enough to start (see the note below) |
-| Node.js 18+ | Runs Remotion, the animation engine | Free |
-| ffmpeg | Mixes the audio | Free |
-| Python 3 | The timing and mixing helper scripts | Free |
+| Claude Code | Делает всё | Нужна платная подписка Claude |
+| ElevenLabs: коннектор в Claude (Настройки → Коннекторы → ElevenLabs) или ключ API в переменной `ELEVENLABS_API_KEY` | Голос рассказчика, музыка, звуки | Для начала хватит бесплатного тарифа: 10 000 кредитов в месяц, это около 10 сказок по 30 секунд |
+| Node.js 18+ | Запускает Remotion, движок анимации | Бесплатно |
+| ffmpeg | Сводит звук | Бесплатно |
+| Python 3.10+ | Скрипты таймингов и сведения | Бесплатно |
 
-Claude checks these at the start and tells you exactly what's missing.
+Claude проверит всё это в начале и скажет, чего не хватает.
 
-> **About the ElevenLabs free plan:** about 10,000 credits a month, enough to try a few stories. It has
-> **no commercial licence** and needs attribution. If you're going to make money from the videos (a
-> monetised channel, client work), use a paid ElevenLabs plan. Check their pricing page for current terms.
+> **Про бесплатный тариф ElevenLabs:** коммерческой лицензии на нём нет, нужно указывать ElevenLabs как источник голоса. Если ролики будут приносить деньги (монетизированный канал, работа для клиентов), нужен платный тариф. Актуальные условия - на странице цен ElevenLabs.
 
-## Use it
-In Claude Code, open a folder for your videos and type something like:
+## Как пользоваться
 
-```
-Use the story-animator skill to make a 60-second kids' story about a little lantern
-that is scared of the dark. Vertical 9:16, with music.
-```
-
-or just
+Откройте в Claude Code папку для роликов и напишите, например:
 
 ```
-Use story-animator to make a story video. Surprise me.
+Сделай навыком story-animator сказку на 60 секунд про бумажный кораблик, который ищет море.
+Вертикально 9:16, с музыкой.
 ```
 
-Claude asks a few quick questions (length, shape, voice, music), shows you the story to approve, and
-then does the rest: voice → timing → drawing → sound → render. You get `out/film.mp4`.
+или просто
 
-## What's inside
 ```
-skills/story-animator/
-  SKILL.md                 the step-by-step workflow Claude follows
-  references/              story craft, timing pipeline, visual style, voice and sound, QA checklist
-  template/                a ready Remotion project (camera, faces, glows, subtitles, starter scene)
-  scripts/transcribe.py    word timestamps → film frames
-  scripts/mix.py           voice + music + sound effects, with the voice always on top
-  scripts/contact_sheet.sh render a few frames to check the film by eye
-  examples/                two complete films (a Diwali story and a robot story), full source
+Сделай навыком story-animator сказку. Удиви меня.
 ```
 
-## Ideas for what to make
-- A kids' bedtime story channel
-- Festival greetings for brands, starring their mascot
-- Picture-book trailers for authors
-- Story-based lessons for teachers
-- Personalised birthday stories with a child's name
+Claude задаст пару коротких вопросов (длина, формат, голос, музыка), покажет текст сказки на согласование и сделает остальное: голос → тайминги → рисунок → звук → рендер. Готовый файл - `out/film.mp4`.
 
-If you post kids' content on YouTube, set the video as **Made for kids**, and follow each platform's
-rules for AI-assisted content.
+## Идеи
 
-## Licence
-MIT. See [LICENSE](LICENSE). Use it, change it, build on it.
+- Канал сказок на ночь
+- Поздравления к праздникам с маскотом бренда
+- Трейлеры детских книг
+- Уроки-истории для учителей
+- Сказка на день рождения с именем ребёнка
+
+Детские ролики на YouTube помечайте как «Для детей» и соблюдайте правила площадок о контенте, сделанном с ИИ.
+
+## Лицензия
+
+MIT, см. [LICENSE](LICENSE). Авторские права на оригинал - у Deenu Khan, правки - ClaudeBase.
